@@ -1,0 +1,1772 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass beamer
+\begin_preamble
+% Include only certain frames - this speeds up compilation
+% The frames to be included need to be labeled, by using ERT
+% as [label=LABELNAME] (no backslashes or {})
+%\includeonlyframes{currentt}
+
+% To make a printable handout (one page per frame), pass
+% the handout option to the doc class (Layout menu)
+
+% For good fonts in PDFs, use pslatex fonts (Layout menu)
+
+% Colors and symbols
+\usepackage{latexsym}
+\usepackage{color}
+% Display covered items in transparent form (as opposed
+% to not showing them at all)
+\newcommand{\coveredinvisible}{
+    \setbeamercovered{invisible}
+}
+\newcommand{\coveredvisible}{
+    \setbeamercovered{highly dynamic}
+}
+
+% Choose default setting here:
+\coveredvisible
+
+\newcommand{\ps}{\vspace{-1.5mm} }
+
+% Theme configuration.  I've basically built a custom theme out of 
+% Warsaw, adding infoline and changing the nav. symbol bar
+
+% Warning: the commands below are order-sensitive!
+
+% load the infolines theme, b/c I want the headline Warsaw 
+% uses (split), but the footline from infolines.
+% In the document body, these will be deactivated for the title and
+% turned on later
+\useoutertheme{infolines}
+% Main theme
+\usetheme{Warsaw}
+% Adjust the color for the center (title) box to be that of
+% infolines, which Warsaw changes
+\setbeamercolor*{title in head/foot}{parent=palette secondary}
+
+% Define a minimal set of navigation symbols
+\defbeamertemplate*{navigation symbols}{minmal}
+{%
+  \hbox{%
+    \hbox{\insertframenavigationsymbol}
+    \hbox{\insertdocnavigationsymbol}
+    \hbox{\insertbackfindforwardnavigationsymbol}%
+  }%
+}
+% activate the minimal navbar
+\setbeamertemplate{navigation symbols}[minimal]
+
+%%%%% HACK %%%%%
+% I started getting errors because LyX is emmitting a color 'none'
+% call, which confuses xcolor.  I'm defining 'none' to be black here.
+\definecolor{none}{cmyk}{0,0,0,1}
+%%%%% /HACK %%%%%
+
+\usepackage{url}
+
+\usepackage{listings}
+
+% A few colors to replace the defaults for certain link types
+\definecolor{orange}{cmyk}{0,0.4,0.8,0.2}
+\definecolor{darkorange}{rgb}{.71,0.21,0.01}
+\definecolor{darkgreen}{rgb}{.12,.54,.11}
+\definecolor{gray}{rgb}{0.45, 0.45, 0.45}
+\definecolor{myteal}{rgb}{.26, .44, .56}
+\lstset{
+language=python,
+frame=single,
+breaklines=true,
+basicstyle=\scriptsize \ttfamily,
+%numbers=left,
+numberstyle=\tiny,
+showstringspaces=false,
+keywordstyle=\color{blue}\bfseries\emph,
+commentstyle=\color{myteal},
+stringstyle=\color{darkgreen},
+identifyerstyle=\color{darkorange},
+xleftmargin=3mm,
+}
+
+%-----------------------------------------------------------------------------
+% This helps prevent overly long lines that stretch beyond the margins
+\sloppy
+\end_preamble
+\options compress
+\use_default_options false
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman palatino
+\font_sans lmss
+\font_typewriter lmtt
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 2
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation landscape
+\suppress_date false
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+% disable the bottom bar for the title and outline pages
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+setbeamertemplate{footline}{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace*{-5mm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Title
+IPython: Python at your fingertips
+\end_layout
+
+\begin_layout Author
+Fernando
+\begin_inset space ~
+\end_inset
+
+Pérez
+\begin_inset Newline newline
+\end_inset
+
+
+\family typewriter
+\size scriptsize
+Fernando.Perez@berkeley.edu
+\begin_inset Newline newline
+\end_inset
+
+http://fperez.org
+\family default
+\size default
+
+\begin_inset Argument
+status open
+
+\begin_layout Plain Layout
+FP
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{5mm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Institute
+Brian E.
+ Granger (Cal Poly San Luis Obispo), Min Ragan-Kelley (UC Berkeley)
+\begin_inset Newline newline
+\end_inset
+
+Thomas Kluyver (U Sheffield), Evan Patterson (Enthought).
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+- Use the 
+\backslash
+inst command only if there are several affiliations.
+\end_layout
+
+\begin_layout Plain Layout
+- Keep it simple, no one is interested in your street address.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Argument
+status open
+
+\begin_layout Plain Layout
+UC Berkeley
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+optional, but mostly needed
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{5mm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Date
+PyCon 2012 
+\begin_inset Newline newline
+\end_inset
+
+March 9, 2012
+\begin_inset Argument
+status open
+
+\begin_layout Plain Layout
+3/9/2012
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+If you have a file called "institution-logo-filename.xxx", where xxx is a
+ graphic format that can be processed by latex or pdflatex, resp., then you
+ can add a logo by uncommenting the following:
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%
+\backslash
+pgfdeclareimage[height=0.5cm]{institution-logo}{institution-logo-filename}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+logo{
+\backslash
+pgfuseimage{institution-logo}}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+The following causes the table of contents to be shown at the beginning
+ of every Section.
+ Delete this, if you do not want it.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+AtBeginSection[]{
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+frame<beamer>{ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\backslash
+frametitle{Outline}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\backslash
+tableofcontents[currentsection]
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+If you wish to uncover everything in a step-wise fashion, uncomment the
+ following command:
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%
+\backslash
+beamerdefaultoverlayspecification{<+->}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+% reactivate the footline
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+setbeamertemplate{footline}[infolines theme]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginPlainFrame
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\series bold
+\size largest
+\color blue
+Why IPython?
+\end_layout
+
+\begin_layout Pause
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace*{5mm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\series bold
+\size largest
+\color blue
+I is for interactive...
+\end_layout
+
+\begin_layout Pause
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace*{10mm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\series bold
+\size large
+In scientific computing, 
+\begin_inset Newline newline
+\end_inset
+
+we typically 
+\color blue
+don't know what we're doing
+\color inherit
+.
+\end_layout
+
+\begin_layout Pause
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\series bold
+\size large
+\emph on
+\color blue
+Exploratory
+\emph default
+\color inherit
+ computing is 
+\emph on
+\color blue
+not just for scientists
+\color inherit
+ 
+\end_layout
+
+\begin_layout BeginPlainFrame
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\series bold
+\size largest
+\color blue
+Python: an excellent 
+\emph on
+base
+\emph default
+ for an
+\begin_inset Newline newline
+\end_inset
+
+interactive environment
+\end_layout
+
+\begin_layout BeginPlainFrame
+I said 
+\emph on
+a base...
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/python_console1.png
+	lyxscale 30
+	height 85theight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginPlainFrame
+Mmh, introspection?
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/python_console2.png
+	lyxscale 30
+	height 85theight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginPlainFrame
+Basic comforts?
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/python_console3.png
+	lyxscale 30
+	height 85theight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginPlainFrame
+Useful error info
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/python_console.png
+	lyxscale 30
+	height 85theight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginPlainFrame
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\series bold
+\size largest
+\color blue
+We can do better...
+\end_layout
+
+\begin_layout BeginPlainFrame
+My files, thankyouverymuch
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/ipython_console1.png
+	lyxscale 30
+	height 85theight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginPlainFrame
+Some object details?
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/ipython_console2.png
+	lyxscale 30
+	height 85theight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginPlainFrame
+More info??
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/ipython_console3.png
+	lyxscale 30
+	height 85theight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginPlainFrame
+When things go wrong
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/ipython_console4.png
+	lyxscale 30
+	height 85theight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+Interactive architecture
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/ipkernel_clients.png
+	lyxscale 30
+	height 85theight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginPlainFrame
+Terminal console with visualization
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/pylab-screen.png
+	lyxscale 30
+	height 85theight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginPlainFrame
+Qt console: inline plots, html, multiline editing, ...
+\end_layout
+
+\begin_layout FrameSubtitle
+Evan Patterson (Enthought)
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/ipython_qtconsole2.png
+	lyxscale 30
+	height 95theight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginPlainFrame
+Microsoft Visual Studio 2010 integrated console
+\end_layout
+
+\begin_layout FrameSubtitle
+Dino Viehland and Shahrokh Mortazavi; 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://pytools.codeplex.com
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/ipython_ms_visual_studio.png
+	lyxscale 50
+	width 95page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginPlainFrame
+Browser-based notebook: rich text, code, plots, ...
+\end_layout
+
+\begin_layout FrameSubtitle
+Brian Granger, James Gao (Berkeley), rest of the team
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/ipython-notebook-specgram-2.png
+	lyxscale 30
+	height 95theight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginPlainFrame
+Interactive and high-level parallel APIs
+\end_layout
+
+\begin_layout FrameSubtitle
+Min Ragan-Kelley, Brian Granger 
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/ipython_dist_architecture.png
+	lyxscale 50
+	width 90text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+How did we get here?
+\end_layout
+
+\begin_layout FrameSubtitle
+A brief history of IPython
+\end_layout
+
+\begin_layout Itemize
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+<+>
+\end_layout
+
+\end_inset
+
+
+\series bold
+\color blue
+October/November 2001: ``just a little afternoon hack``
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\color blue
+$PYTHONSTARTUP: ipython-0.0.1.py
+\family default
+\color inherit
+ (259 lines)
+\end_layout
+
+\begin_layout Itemize
+
+\color blue
+IPP
+\color inherit
+ (Interactive Python Prompt) by Janko Hauser (Oceanography)
+\end_layout
+
+\begin_layout Itemize
+
+\color blue
+LazyPython
+\color inherit
+ by Nathan Gray (CalTech)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+<+>
+\end_layout
+
+\end_inset
+
+
+\series bold
+\color blue
+2002: Drop John Hunter's Gnuplot patches: matplotlib
+\end_layout
+
+\begin_layout Itemize
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+<+>
+\end_layout
+
+\end_inset
+
+
+\series bold
+\color blue
+2004: Brian Granger, Min Ragan-Kelley: Parallel on Twisted...
+\end_layout
+
+\begin_layout Itemize
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+<+>
+\end_layout
+
+\end_inset
+
+
+\series bold
+\color blue
+2005-2009: Mayavi, Wx support, refactoring; slow period.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+<+>
+\end_layout
+
+\end_inset
+
+
+\series bold
+\color blue
+2010: discover ØMQ, Enthought support.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Move to Git/Github.
+\end_layout
+
+\begin_layout Itemize
+Build Qt console (Evan Patterson).
+\end_layout
+
+\begin_layout Itemize
+Rewrite parallel support with ZeroMQ.
+\end_layout
+
+\begin_layout Itemize
+Python 3 port (Thomas Kluyver).
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+<+>
+\end_layout
+
+\end_inset
+
+
+\series bold
+\color blue
+2011: Web Notebook.
+\end_layout
+
+\begin_layout BeginPlainFrame
+(Incomplete) Cast of Characters
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\size footnotesize
+\color blue
+Brian Granger
+\series default
+\color inherit
+ - Physics, Cal State San Luis Obispo
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\size footnotesize
+\color blue
+Min Ragan-Kelley
+\series default
+\color inherit
+ - UC Berkeley
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\size footnotesize
+Thomas Kluyver
+\series default
+ - U.
+ Sheffield
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\size footnotesize
+Jörgen Stenarson 
+\series default
+- SP Technical Research Institute of Sweden
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\size footnotesize
+Paul Ivanov
+\series default
+ - UC Berkeley 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\size footnotesize
+Robert Kern
+\series default
+ - Enthought
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\size footnotesize
+Evan Patterson - 
+\series default
+Caltech/Enthought
+\end_layout
+
+\begin_layout Itemize
+
+\size footnotesize
+Stefan van der Walt - UC Berkeley
+\end_layout
+
+\begin_layout Itemize
+
+\size footnotesize
+John Hunter - TradeLink Securities, Chicago.
+\end_layout
+
+\begin_layout Itemize
+
+\size footnotesize
+Prabhu Ramachandran - Aerospace Engineering, IIT Bombay
+\end_layout
+
+\begin_layout Itemize
+
+\size footnotesize
+Satra Ghosh- MIT Neuroscience
+\end_layout
+
+\begin_layout Itemize
+
+\size footnotesize
+Gaël
+\series bold
+ 
+\series default
+Varoquaux - Neurospin (Orsay, France)
+\end_layout
+
+\begin_layout Itemize
+
+\size footnotesize
+Ville Vainio - CS, Tampere University of Technology, Finland
+\end_layout
+
+\begin_layout Itemize
+
+\size footnotesize
+Barry Wark - Neuroscience, U.
+ Washington.
+\end_layout
+
+\begin_layout Itemize
+
+\size footnotesize
+Ondrej Certik - Physics, U Nevada Reno
+\end_layout
+
+\begin_layout Itemize
+
+\size footnotesize
+Darren Dale - Cornell
+\end_layout
+
+\begin_layout Itemize
+
+\size footnotesize
+Justin Riley - MIT 
+\end_layout
+
+\begin_layout Itemize
+
+\size footnotesize
+Mark Voorhies - UC San Francisco
+\end_layout
+
+\begin_layout Itemize
+
+\size footnotesize
+Nicholas Rougier - INRIA Nancy Grand Est
+\end_layout
+
+\begin_layout Itemize
+
+\size footnotesize
+Thomas Spura - Fedora project
+\end_layout
+
+\begin_layout Itemize
+
+\size footnotesize
+Julian Taylor - Debian/Ubuntu
+\end_layout
+
+\begin_layout Itemize
+
+\size footnotesize
+\color blue
+Many more! (~140 commit authors)
+\end_layout
+
+\begin_layout BeginPlainFrame
+Some quick stats.
+ http://www/ohloh.net/p/ipython
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/ipython_ohloh_stats_20120303.png
+	lyxscale 30
+	width 95text%
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout BeginPlainFrame
+Other projects using IPython
+\end_layout
+
+\begin_layout ColumnsTopAligned
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+7cm
+\end_layout
+
+\begin_layout Block
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{Scientific}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+\size footnotesize
+EPD:
+\series default
+ Enthought Python Distribution.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\size footnotesize
+Sage
+\series default
+: open source mathematics.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\size footnotesize
+PyRAF
+\series default
+: Space Telescope Science Institute
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\size footnotesize
+CASA
+\series default
+: Nat.
+ Radio Astronomy Observatory
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\size footnotesize
+Ganga
+\series default
+: CERN
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\size footnotesize
+PyMAD
+\series default
+: neutron spectrom., Laue Langevin
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\size footnotesize
+Sardana
+\series default
+: European Synchrotron Radiation
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\size footnotesize
+ASCEND
+\series default
+: eng.
+ modeling (Carnegie Mellon).
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\size footnotesize
+JModelica
+\series default
+: dynamical systems.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\size footnotesize
+DASH
+\series default
+: Denver Aerosol Sources and Health.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\size footnotesize
+Trilinos
+\series default
+: Sandia National Lab.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\size footnotesize
+DoD
+\series default
+: baseline configuration.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\size footnotesize
+Mayavi
+\series default
+: 3d visualization, Enthought.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\size footnotesize
+NiPype
+\series default
+: computational pipelines, MIT.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\size footnotesize
+PyIMSL
+\series default
+ Studio, by Visual Numerics.
+\end_layout
+
+\begin_layout Itemize
+...
+\end_layout
+
+\end_deeper
+\begin_layout Column
+4.3cm
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{Web/Other}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+\size footnotesize
+Visual Studio 2010
+\series default
+: MS.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\size footnotesize
+Django
+\series default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\size footnotesize
+Turbo
+\series default
+ 
+\series bold
+Gears
+\series default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\size footnotesize
+Pylons
+\series default
+ web framework
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\size footnotesize
+Zope
+\series default
+ and 
+\series bold
+Plone
+\series default
+ CMS.
+\end_layout
+
+\begin_layout Itemize
+
+\size footnotesize
+Axon Shell, BBC 
+\series bold
+Kamaelia
+\series default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\size footnotesize
+Schevo
+\series default
+ database.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\size footnotesize
+Pitz
+\series default
+: distributed task/bug tracking.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\size footnotesize
+iVR
+\series default
+ (interactive Virtual Reality).
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\size footnotesize
+Movable Python 
+\series default
+(portable Python environment).
+\end_layout
+
+\begin_layout Itemize
+
+\size footnotesize
+...
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout BeginPlainFrame
+Support
+\end_layout
+
+\begin_layout FrameSubtitle
+Thank you!
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\color blue
+Enthought
+\series default
+\color inherit
+, Austin, TX: 
+\series bold
+\color blue
+Lots!
+\end_layout
+
+\begin_layout Itemize
+
+\color blue
+Tech-X
+\color inherit
+ Corporation, Boulder, CO: Parallel/notebook (previous versions)
+\end_layout
+
+\begin_layout Itemize
+
+\color blue
+Microsoft
+\color inherit
+: WinHPC support, Visual Studio integration
+\end_layout
+
+\begin_layout Itemize
+
+\color blue
+NIH
+\color inherit
+: via NiPy grant
+\end_layout
+
+\begin_layout Itemize
+
+\color blue
+NSF
+\color inherit
+: via Sage compmath grant
+\end_layout
+
+\begin_layout Itemize
+
+\color blue
+Google
+\color inherit
+: summer of code 2005, 2010.
+\end_layout
+
+\begin_layout Itemize
+
+\color blue
+DoD/HPTi
+\color inherit
+: funding through Sept.
+ 2012 (thanks to 
+\color blue
+Jose Unpingco
+\color inherit
+!).
+\end_layout
+
+\begin_layout BeginPlainFrame
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\series bold
+\size largest
+\color blue
+IPython in brief
+\end_layout
+
+\begin_layout Enumerate
+
+\color blue
+A better Python shell
+\end_layout
+
+\begin_layout Enumerate
+
+\color blue
+Embeddable Kernel and powerful interactive clients
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\color none
+Terminal
+\end_layout
+
+\begin_layout Enumerate
+
+\color none
+Qt console
+\end_layout
+
+\begin_layout Enumerate
+
+\color none
+Web notebook
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\color blue
+Flexible parallel computing
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace*{1cm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\series bold
+\size large
+\color blue
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+http://ipython.org
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\series bold
+\size large
+\color blue
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+http://github.com/ipython
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginPlainFrame
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\series bold
+\size largest
+Demo time!
+\series default
+\size default
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{5mm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginPlainFrame
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace*{-3mm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace*{-5mm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename fig/pycon_booth.jpg
+	lyxscale 30
+	height 100pheight%
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\end_body
+\end_document
